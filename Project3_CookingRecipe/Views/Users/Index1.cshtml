@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Project3_CookingRecipe.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Phone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserGroup.NameUserGroup)
+        </th>
+        <th>Task Manager</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.IdUserGroup == 3)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserGroup.NameUserGroup)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdUser }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdUser }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdUser })
+                </td>
+            </tr>
+        }
+    }
+
+</table>

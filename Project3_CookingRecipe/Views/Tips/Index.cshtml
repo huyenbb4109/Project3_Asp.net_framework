@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Project3_CookingRecipe.Models.Tip>
+
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NameTip)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Img)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Describe)
+        </th>
+        <th>Task Manager</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameTip)
+        </td>
+        <td>
+            <img src="~/UploadedFiles/@item.Img" width="120" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Describe)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdTip }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdTip }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdTip })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,56 @@
+﻿@model Project3_CookingRecipe.Models.CookingRecipe
+
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewBag.Title = "Details Recipe";
+}
+
+<table border="0" class="table-delails">
+    <tr>
+        <td><img src="~/UploadedFiles/@Model.Img" width="500" height="350" /></td>
+        <td class="td-width"></td>
+        <td class="td-up">
+            <h2>@Html.DisplayFor(model => model.NameFood)</h2>
+            <div>
+                <b style=" color: #626773;">@Html.DisplayNameFor(model => model.Event.NameEvent)</b>:
+                @Html.DisplayFor(model => model.Event.NameEvent).<br /><br>
+            </div>
+            <table>
+                <tr>
+                    <td><img src="~/Content/Admin/assets/images/icon/avt.jpg" width="50" /></td>
+                    <td>
+                        <b>@Html.DisplayFor(model => model.User.FullName)</b>
+                        <p style="color: rgba(98,103,115,.7);">
+                            @Html.DisplayFor(model => model.DateSubmit)
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+
+            <div>@Html.DisplayFor(model => model.Describe)</div>
+        </td>
+    </tr>
+    <tr>
+        <td><p></p></td>
+    </tr>
+    <tr>
+        <td><h4>@Html.DisplayNameFor(model => model.Ingredients)</h4></td>
+    </tr>
+    <tr style="text-align: left">
+        <td colspan="3">@Html.DisplayFor(model => model.Ingredients)</td>
+    </tr>
+    <tr>
+        <td><p></p></td>
+    </tr>
+    <tr>
+        <td><h4>@Html.DisplayNameFor(model => model.Steps)</h4></td>
+    </tr>
+    <tr style="text-align: left">
+        <td colspan="3">@Html.Raw(HttpUtility.HtmlDecode(Model.Steps))</td>
+    </tr>
+</table>
+<p>
+    @Html.ActionLink("Return Create", "Create", new { id = Model.IdRecipe }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

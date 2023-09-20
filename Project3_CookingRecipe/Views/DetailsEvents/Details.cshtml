@@ -1,0 +1,43 @@
+﻿@model Project3_CookingRecipe.Models.DetailsEvent
+
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DetailsEvent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CookingRecipe.NameFood)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CookingRecipe.NameFood)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.NameEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.NameEvent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

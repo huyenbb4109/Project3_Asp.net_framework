@@ -1,0 +1,92 @@
+﻿@model Project3_CookingRecipe.Models.CookingRecipe
+
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewBag.Title = "Delete Recipe";
+}
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameFood)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameFood)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Img)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Describe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Describe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ingredients)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ingredients)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSubmit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateSubmit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Steps)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Steps)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Event.NameEvent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Event.NameEvent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.FullName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn-submit" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

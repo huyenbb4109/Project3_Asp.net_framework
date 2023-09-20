@@ -1,0 +1,39 @@
+﻿@model Project3_CookingRecipe.Models.Tip
+
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewBag.Title = "Details";
+}
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NameTip)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NameTip)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Img)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Img)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Describe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Describe)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdTip }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

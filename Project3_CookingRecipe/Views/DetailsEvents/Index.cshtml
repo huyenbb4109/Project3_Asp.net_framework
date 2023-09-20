@@ -1,0 +1,44 @@
+﻿@model IEnumerable<Project3_CookingRecipe.Models.DetailsEvent>
+
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewBag.Title = "Details Event";
+}
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CookingRecipe.NameFood)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Event.NameEvent)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.FullName)
+        </th>
+        <th>Task Manager</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CookingRecipe.NameFood)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Event.NameEvent)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.FullName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

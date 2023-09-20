@@ -1,0 +1,205 @@
+﻿@model Project3_CookingRecipe.Models.CookingRecipe
+
+@{
+    Layout = "~/Views/Shared/_LayoutIndex.cshtml";
+    ViewBag.Title = "Edit Recipe";
+}
+
+@using (Html.BeginForm("Edit", "CookingRecipes", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdRecipe)
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Image</label>
+
+            <div class="col-md-10">
+                <div> <img height="130" width="130" id="user_img" src="~/UploadedFiles/@Model.Img"> </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Upload Image <span class="sao">*</span></label>
+
+            <div class="col-md-10">
+                <div name="filedrag" style="position: absolute; width: 100%; height: 37.4px; z-index: -1;"></div>
+                <input type="text" id="getImg" name="Img" value="@Model.Img" class="input-img" disabled style="border-top-left-radius: 0.25rem; border-bottom-left-radius: 0.25rem;">
+                <input type="file" name="image" class="filestyle" data-btnclass="btn-primary" id="filestyle-4" tabindex="-1" style="display: none;" multiple onchange="show(this)">
+                <span class="group-span-filestyle input-group-btn" tabindex="0">
+                    <label for="filestyle-4" style="margin-bottom: 4px;" class="btn btn-primary">
+                        <span class="buttonText">Upload</span>
+                    </label>
+                </span>
+
+                <div id="validate_img" class="text-danger"></div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">NameFood <span class="sao">*</span></label>
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NameFood, new { htmlAttributes = new { @class = "form-control", @id = "namefood", @maxlength = "60", @data_val = "true", @required = "required" } })
+                <span class="character_count"></span>
+
+                <br />
+                <div class="text-danger" id="validate_namefood"></div>
+                @*<span class="text-danger field-validation-error" data-valmsg-for="NameFood" data-valmsg-replace="true"><span id="namefood-error" class="">Name Food is required!</span></span>*@
+                @Html.ValidationMessageFor(model => model.NameFood, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdUser, "User", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" id="IdUser" name="IdUser">
+                    <option value="1">Nguyễn Trường Giang</option>
+                </select>
+                @*@Html.DropDownList("IdUser", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })*@
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdEvent, "Event", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" id="IdEvent" name="IdEvent">
+                    <option value="1">Không tham gia</option>
+                </select>
+                @*@Html.DropDownList("IdEvent", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })*@
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.Describe, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2">Describe </label>
+
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.Describe, new { htmlAttributes = new { @class = "form-control" } })*@
+                <div class="textarea1">
+                    @Html.TextAreaFor(model => model.Describe, 7, 80, new { htmlAttributes = new { @class = "form-control", @id = "describe" }, style = "width: 60%", @placeholder = " Enter describe here...", @maxlength = "500" })
+                    <span class="character_count"></span>
+
+                    <br />
+                    <div class="text-danger" id="validate_describe"></div>
+                    @Html.ValidationMessageFor(model => model.Describe, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.Ingredients, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <label class="control-label col-md-2">Ingredients <span class="sao">*</span></label>
+
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Ingredients, 7, 80, new
+                {
+                    htmlAttributes = new { @class = "form-control", @id = "ingredients", @data_val = "true", @required = "required" },
+                    style = "width: 60%",
+                    @placeholder = " Enter ingredients here...",
+                    @maxlength = "500"
+                })
+                <span class="character_count"></span>
+
+                <br />
+                <div class="text-danger" id="validate_ingredients"></div>
+                @Html.ValidationMessageFor(model => model.Ingredients, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Step <span class="sao">*</span></label>
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Steps, new { htmlAttributes = new { @class = "form-control", @id = "step", @name = "step" }, style = "width: 60%", @placeholder = " Enter step here...", @maxlength = "65535" })
+                <span class="character_count"></span>
+
+                <br />
+                <div class="text-danger" id="validate_steps"></div>
+                @Html.ValidationMessageFor(model => model.Steps, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="cc">
+                <input type="submit" value="Save" class="btn-submit" onclick="return validate();" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        CKEDITOR.replace('Steps', {
+            filebrowserImageUploadUrl: 'CookingRecipes/UploadImage'
+        });
+        function show(input) {
+            debugger;
+            var validExtensions = ['jpg', 'png', 'jpeg', 'jfif']; //array of valid extensions
+            var fileName = input.files[0].name;
+            var fileNameExt = fileName.substr(fileName.lastIndexOf('.') + 1);
+            var fsize = $(input)[0].files[0].size;
+
+            if ($.inArray(fileNameExt, validExtensions) == -1) {
+                input.type = ''
+                input.type = 'file'
+                $('#user_img').attr('src', "");
+                $('#validate_img').html("Only these file types are accepted : " + validExtensions.join(', '));
+                $('#getImg').val("");
+            }
+            else {
+                if (input.files && input.files[0]) {
+                    var fileName1 = $('input:file').val().match(/[^\\/]*$/)[0];
+
+                    var filerdr = new FileReader();
+
+                    filerdr.onload = function (e) {
+                        if (fsize > 1048576) {
+                            $('#validate_img').html(fsize + " bites\nToo big!");
+                        }
+                        
+                        $('#user_img').attr('src', e.target.result);
+                        $('#getImg').val(fileName1);
+                    }
+                    filerdr.readAsDataURL(input.files[0]);
+                    $('#validate_img').html("");
+                }
+            }
+        }
+
+        function validate() {
+            if ($('#filestyle-4').val() == "") {
+                $('#validate_img').html("You haven't selected a photo yet! ");
+                return false;
+            }
+            return true;
+        }
+
+        $(document).ready(function () {
+            $("input, textarea").on("keyup", function () {
+                if (typeof $(this).attr('maxlength') !== "undefined" && $(this).attr('maxlength') !== false) {
+
+                    length = $(this).val().length;
+                    max = parseInt($(this).attr('maxlength'));
+                    if (length != 0) {
+                        $(this).next(".character_count").html("(" + length + "/" + max + " characters)");
+                    } else {
+                        $(this).next(".character_count").html("");
+                    }
+                }
+            });
+
+        });
+    </script>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="~/Plugin/ckeditor_4.19.1_full/ckeditor/ckeditor.js"></script>

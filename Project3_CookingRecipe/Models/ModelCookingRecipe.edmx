@@ -1,0 +1,798 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DatabaseCookingJameModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Achievements">
+          <Key>
+            <PropertyRef Name="IdAchievement" />
+          </Key>
+          <Property Name="IdAchievement" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdEvent" Type="int" Nullable="false" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="120" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="IdComment" />
+          </Key>
+          <Property Name="IdComment" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" />
+          <Property Name="IdRecipe" Type="int" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CookingRecipe">
+          <Key>
+            <PropertyRef Name="IdRecipe" />
+          </Key>
+          <Property Name="IdRecipe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameFood" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Img" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="500" />
+          <Property Name="Ingredients" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdEvent" Type="int" Nullable="false" />
+          <Property Name="DateSubmit" Type="datetime" Nullable="false" />
+          <Property Name="Steps" Type="text" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\CODE\BTPROJECT\PROJECT3_COOKINGRECIPE\PROJECT3_COOKINGRECIPE\APP_DATA\DATABASECOOKINGJAME.MDF.dbo.DetailsEvent' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DetailsEvent">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="IdRecipe" />
+          </Key>
+          <Property Name="IdEvent" Type="int" Nullable="false" />
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdRecipe" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+          </Key>
+          <Property Name="IdEvent" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameEvent" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Img" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="NumberOfParticipants" Type="tinyint" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="Prize" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\CODE\BTPROJECT\PROJECT3_COOKINGRECIPE\PROJECT3_COOKINGRECIPE\APP_DATA\DATABASECOOKINGJAME.MDF.dbo.Feedback' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="message" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="IdFollowing" />
+          </Key>
+          <Property Name="IdUser" Type="int" Nullable="false" />
+          <Property Name="IdFollowing" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tips">
+          <Key>
+            <PropertyRef Name="IdTip" />
+          </Key>
+          <Property Name="IdTip" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameTip" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="Img" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Describe" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="IdUserGroup" />
+          </Key>
+          <Property Name="IdUserGroup" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NameUserGroup" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="15" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdUserGroup" Type="int" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="70" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AchievementsIdEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Achievements" Type="Self.Achievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="IdEvent" />
+            </Principal>
+            <Dependent Role="Achievements">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AchievementsIdUser">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Achievements" Type="Self.Achievements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Achievements">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentIdRecipe">
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CookingRecipe">
+              <PropertyRef Name="IdRecipe" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="IdRecipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentIdUser">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CookingRecipeIdEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="IdEvent" />
+            </Principal>
+            <Dependent Role="CookingRecipe">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CookingRecipeIdUser">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="CookingRecipe">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailsEventIdEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="DetailsEvent" Type="Self.DetailsEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="IdEvent" />
+            </Principal>
+            <Dependent Role="DetailsEvent">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailsEventIdRecipe">
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="1" />
+          <End Role="DetailsEvent" Type="Self.DetailsEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CookingRecipe">
+              <PropertyRef Name="IdRecipe" />
+            </Principal>
+            <Dependent Role="DetailsEvent">
+              <PropertyRef Name="IdRecipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailsEventIdUser">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="DetailsEvent" Type="Self.DetailsEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="DetailsEvent">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedbackIdUser">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FollowIdUser">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Following">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="IdFollowing" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersIdUserGroup">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="IdUserGroup" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdUserGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseCookingJameModelStoreContainer">
+          <EntitySet Name="Achievements" EntityType="Self.Achievements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Comment" EntityType="Self.Comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CookingRecipe" EntityType="Self.CookingRecipe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Event" EntityType="Self.Event" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Follow" EntityType="Self.Follow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tips" EntityType="Self.Tips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserGroup" EntityType="Self.UserGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DetailsEvent" EntityType="Self.DetailsEvent" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DetailsEvent].[IdEvent] AS [IdEvent], 
+    [DetailsEvent].[IdUser] AS [IdUser], 
+    [DetailsEvent].[IdRecipe] AS [IdRecipe]
+    FROM [dbo].[DetailsEvent] AS [DetailsEvent]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="Feedback" EntityType="Self.Feedback" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Feedback].[IdUser] AS [IdUser], 
+    [Feedback].[message] AS [message]
+    FROM [dbo].[Feedback] AS [Feedback]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AchievementsIdEvent" Association="Self.FK_AchievementsIdEvent">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="Achievements" EntitySet="Achievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AchievementsIdUser" Association="Self.FK_AchievementsIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Achievements" EntitySet="Achievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentIdRecipe" Association="Self.FK_CommentIdRecipe">
+            <End Role="CookingRecipe" EntitySet="CookingRecipe" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentIdUser" Association="Self.FK_CommentIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CookingRecipeIdEvent" Association="Self.FK_CookingRecipeIdEvent">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="CookingRecipe" EntitySet="CookingRecipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CookingRecipeIdUser" Association="Self.FK_CookingRecipeIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CookingRecipe" EntitySet="CookingRecipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailsEventIdEvent" Association="Self.FK_DetailsEventIdEvent">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="DetailsEvent" EntitySet="DetailsEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailsEventIdRecipe" Association="Self.FK_DetailsEventIdRecipe">
+            <End Role="CookingRecipe" EntitySet="CookingRecipe" />
+            <End Role="DetailsEvent" EntitySet="DetailsEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailsEventIdUser" Association="Self.FK_DetailsEventIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DetailsEvent" EntitySet="DetailsEvent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedbackIdUser" Association="Self.FK_FeedbackIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Feedback" EntitySet="Feedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FollowIdUser" Association="Self.FK_FollowIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Following" Association="Self.FK_Following">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersIdUserGroup" Association="Self.FK_UsersIdUserGroup">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseCookingJameModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Achievement">
+          <Key>
+            <PropertyRef Name="IdAchievement" />
+          </Key>
+          <Property Name="IdAchievement" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdEvent" Type="Int32" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="120" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_AchievementsIdEvent" FromRole="Achievements" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="Self.FK_AchievementsIdUser" FromRole="Achievements" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Comment">
+          <Key>
+            <PropertyRef Name="IdComment" />
+          </Key>
+          <Property Name="IdComment" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdRecipe" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="CookingRecipe" Relationship="Self.FK_CommentIdRecipe" FromRole="Comment" ToRole="CookingRecipe" />
+          <NavigationProperty Name="User" Relationship="Self.FK_CommentIdUser" FromRole="Comment" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="CookingRecipe">
+          <Key>
+            <PropertyRef Name="IdRecipe" />
+          </Key>
+          <Property Name="IdRecipe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameFood" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Ingredients" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdEvent" Type="Int32" Nullable="false" />
+          <Property Name="DateSubmit" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Steps" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_CommentIdRecipe" FromRole="CookingRecipe" ToRole="Comment" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_CookingRecipeIdEvent" FromRole="CookingRecipe" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="Self.FK_CookingRecipeIdUser" FromRole="CookingRecipe" ToRole="Users" />
+          <NavigationProperty Name="DetailsEvents" Relationship="Self.FK_DetailsEventIdRecipe" FromRole="CookingRecipe" ToRole="DetailsEvent" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+          </Key>
+          <Property Name="IdEvent" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameEvent" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NumberOfParticipants" Type="Byte" Nullable="false" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Prize" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Achievements" Relationship="Self.FK_AchievementsIdEvent" FromRole="Event" ToRole="Achievements" />
+          <NavigationProperty Name="CookingRecipes" Relationship="Self.FK_CookingRecipeIdEvent" FromRole="Event" ToRole="CookingRecipe" />
+          <NavigationProperty Name="DetailsEvents" Relationship="Self.FK_DetailsEventIdEvent" FromRole="Event" ToRole="DetailsEvent" />
+        </EntityType>
+        <EntityType Name="Tip">
+          <Key>
+            <PropertyRef Name="IdTip" />
+          </Key>
+          <Property Name="IdTip" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameTip" Type="String" MaxLength="60" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Img" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Describe" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="IdUserGroup" />
+          </Key>
+          <Property Name="IdUserGroup" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameUserGroup" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_UsersIdUserGroup" FromRole="UserGroup" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdUserGroup" Type="Int32" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="70" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Achievements" Relationship="Self.FK_AchievementsIdUser" FromRole="Users" ToRole="Achievements" />
+          <NavigationProperty Name="Comments" Relationship="Self.FK_CommentIdUser" FromRole="Users" ToRole="Comment" />
+          <NavigationProperty Name="CookingRecipes" Relationship="Self.FK_CookingRecipeIdUser" FromRole="Users" ToRole="CookingRecipe" />
+          <NavigationProperty Name="UserGroup" Relationship="Self.FK_UsersIdUserGroup" FromRole="Users" ToRole="UserGroup" />
+          <NavigationProperty Name="DetailsEvents" Relationship="Self.FK_DetailsEventIdUser" FromRole="Users" ToRole="DetailsEvent" />
+          <NavigationProperty Name="Feedback" Relationship="Self.FK_FeedbackIdUser" FromRole="Users" ToRole="Feedback" />
+          <NavigationProperty Name="Users1" Relationship="Self.Follow" FromRole="Users" ToRole="Users1" />
+          <NavigationProperty Name="Users" Relationship="Self.Follow" FromRole="Users1" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="DetailsEvent">
+          <Key>
+            <PropertyRef Name="IdEvent" />
+            <PropertyRef Name="IdUser" />
+            <PropertyRef Name="IdRecipe" />
+          </Key>
+          <Property Name="IdEvent" Type="Int32" Nullable="false" />
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="IdRecipe" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CookingRecipe" Relationship="Self.FK_DetailsEventIdRecipe" FromRole="DetailsEvent" ToRole="CookingRecipe" />
+          <NavigationProperty Name="Event" Relationship="Self.FK_DetailsEventIdEvent" FromRole="DetailsEvent" ToRole="Event" />
+          <NavigationProperty Name="User" Relationship="Self.FK_DetailsEventIdUser" FromRole="DetailsEvent" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="IdUser" />
+          </Key>
+          <Property Name="IdUser" Type="Int32" Nullable="false" />
+          <Property Name="message" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="Self.FK_FeedbackIdUser" FromRole="Feedback" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_AchievementsIdEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="Achievements" Type="Self.Achievement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="IdEvent" />
+            </Principal>
+            <Dependent Role="Achievements">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AchievementsIdUser">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Achievements" Type="Self.Achievement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Achievements">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentIdRecipe">
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CookingRecipe">
+              <PropertyRef Name="IdRecipe" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="IdRecipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentIdUser">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Comment" Type="Self.Comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Comment">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CookingRecipeIdEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="IdEvent" />
+            </Principal>
+            <Dependent Role="CookingRecipe">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CookingRecipeIdUser">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="CookingRecipe">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailsEventIdRecipe">
+          <End Role="CookingRecipe" Type="Self.CookingRecipe" Multiplicity="1" />
+          <End Role="DetailsEvent" Type="Self.DetailsEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CookingRecipe">
+              <PropertyRef Name="IdRecipe" />
+            </Principal>
+            <Dependent Role="DetailsEvent">
+              <PropertyRef Name="IdRecipe" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailsEventIdEvent">
+          <End Role="Event" Type="Self.Event" Multiplicity="1" />
+          <End Role="DetailsEvent" Type="Self.DetailsEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="IdEvent" />
+            </Principal>
+            <Dependent Role="DetailsEvent">
+              <PropertyRef Name="IdEvent" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UsersIdUserGroup">
+          <End Role="UserGroup" Type="Self.UserGroup" Multiplicity="1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="IdUserGroup" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="IdUserGroup" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetailsEventIdUser">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="DetailsEvent" Type="Self.DetailsEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="DetailsEvent">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedbackIdUser">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Feedback" Type="Self.Feedback" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="IdUser" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="IdUser" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Follow">
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <End Role="Users1" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DatabaseCookingJameEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Achievements" EntityType="Self.Achievement" />
+          <EntitySet Name="Comments" EntityType="Self.Comment" />
+          <EntitySet Name="CookingRecipes" EntityType="Self.CookingRecipe" />
+          <EntitySet Name="Events" EntityType="Self.Event" />
+          <EntitySet Name="Tips" EntityType="Self.Tip" />
+          <EntitySet Name="UserGroups" EntityType="Self.UserGroup" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="DetailsEvents" EntityType="Self.DetailsEvent" />
+          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+          <AssociationSet Name="FK_AchievementsIdEvent" Association="Self.FK_AchievementsIdEvent">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="Achievements" EntitySet="Achievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AchievementsIdUser" Association="Self.FK_AchievementsIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Achievements" EntitySet="Achievements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentIdRecipe" Association="Self.FK_CommentIdRecipe">
+            <End Role="CookingRecipe" EntitySet="CookingRecipes" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentIdUser" Association="Self.FK_CommentIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Comment" EntitySet="Comments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CookingRecipeIdEvent" Association="Self.FK_CookingRecipeIdEvent">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="CookingRecipe" EntitySet="CookingRecipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CookingRecipeIdUser" Association="Self.FK_CookingRecipeIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CookingRecipe" EntitySet="CookingRecipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailsEventIdRecipe" Association="Self.FK_DetailsEventIdRecipe">
+            <End Role="CookingRecipe" EntitySet="CookingRecipes" />
+            <End Role="DetailsEvent" EntitySet="DetailsEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailsEventIdEvent" Association="Self.FK_DetailsEventIdEvent">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="DetailsEvent" EntitySet="DetailsEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UsersIdUserGroup" Association="Self.FK_UsersIdUserGroup">
+            <End Role="UserGroup" EntitySet="UserGroups" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetailsEventIdUser" Association="Self.FK_DetailsEventIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DetailsEvent" EntitySet="DetailsEvents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedbackIdUser" Association="Self.FK_FeedbackIdUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="Follow" Association="Self.Follow">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Users1" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseCookingJameModelStoreContainer" CdmEntityContainer="DatabaseCookingJameEntities1">
+          <EntitySetMapping Name="Achievements">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.Achievement">
+              <MappingFragment StoreEntitySet="Achievements">
+                <ScalarProperty Name="IdAchievement" ColumnName="IdAchievement" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Comments">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.Comment">
+              <MappingFragment StoreEntitySet="Comment">
+                <ScalarProperty Name="IdComment" ColumnName="IdComment" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="IdRecipe" ColumnName="IdRecipe" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CookingRecipes">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.CookingRecipe">
+              <MappingFragment StoreEntitySet="CookingRecipe">
+                <ScalarProperty Name="IdRecipe" ColumnName="IdRecipe" />
+                <ScalarProperty Name="NameFood" ColumnName="NameFood" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Ingredients" ColumnName="Ingredients" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
+                <ScalarProperty Name="DateSubmit" ColumnName="DateSubmit" />
+                <ScalarProperty Name="Steps" ColumnName="Steps" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
+                <ScalarProperty Name="NameEvent" ColumnName="NameEvent" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="NumberOfParticipants" ColumnName="NumberOfParticipants" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Prize" ColumnName="Prize" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tips">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.Tip">
+              <MappingFragment StoreEntitySet="Tips">
+                <ScalarProperty Name="IdTip" ColumnName="IdTip" />
+                <ScalarProperty Name="NameTip" ColumnName="NameTip" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroups">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.UserGroup">
+              <MappingFragment StoreEntitySet="UserGroup">
+                <ScalarProperty Name="IdUserGroup" ColumnName="IdUserGroup" />
+                <ScalarProperty Name="NameUserGroup" ColumnName="NameUserGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="FullName" ColumnName="FullName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="IdUserGroup" ColumnName="IdUserGroup" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DetailsEvents">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.DetailsEvent">
+              <MappingFragment StoreEntitySet="DetailsEvent">
+                <ScalarProperty Name="IdEvent" ColumnName="IdEvent" />
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="IdRecipe" ColumnName="IdRecipe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="DatabaseCookingJameModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+                <ScalarProperty Name="message" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Follow" TypeName="DatabaseCookingJameModel.Follow" StoreEntitySet="Follow">
+            <EndProperty Name="Users">
+              <ScalarProperty Name="IdUser" ColumnName="IdUser" />
+            </EndProperty>
+            <EndProperty Name="Users1">
+              <ScalarProperty Name="IdUser" ColumnName="IdFollowing" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
